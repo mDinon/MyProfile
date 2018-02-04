@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MyProfile.Model.Entities;
 
@@ -21,6 +22,16 @@ namespace MyProfile.DAL.Repository
 				.ToList();
 		}
 
+		public Task<List<Contact>> GetListAsync(int ownerID)
+		{
+			return DbContext.Contact
+				.Include(c => c.Owner)
+				.Include(c => c.ContactType)
+				.Where(c => c.Owner_ID == ownerID)
+				.OrderByDescending(c => c.ID)
+				.ToListAsync();
+		}
+
 		public override Contact Find(int id)
 		{
 			return DbContext.Contact
@@ -28,6 +39,15 @@ namespace MyProfile.DAL.Repository
 				.Include(c => c.ContactType)
 				.Where(c => c.ID == id)
 				.FirstOrDefault();
+		}
+
+		public override Task<Contact> FindAsync(int id)
+		{
+			return DbContext.Contact
+				.Include(c => c.Owner)
+				.Include(c => c.ContactType)
+				.Where(c => c.ID == id)
+				.FirstOrDefaultAsync();
 		}
 	}
 }

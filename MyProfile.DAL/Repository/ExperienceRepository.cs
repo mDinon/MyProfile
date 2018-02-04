@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MyProfile.Model.Entities;
 
@@ -21,6 +22,16 @@ namespace MyProfile.DAL.Repository
 				.ToList();
 		}
 
+		public Task<List<Experience>> GetListAsync(int ownerID)
+		{
+			return DbContext.Experience
+				.Include(e => e.Owner)
+				.Include(e => e.ExperienceType)
+				.Where(e => e.Owner_ID == ownerID)
+				.OrderByDescending(e => e.ID)
+				.ToListAsync();
+		}
+
 		public override Experience Find(int id)
 		{
 			return DbContext.Experience
@@ -28,6 +39,15 @@ namespace MyProfile.DAL.Repository
 				.Include(e => e.ExperienceType)
 				.Where(e => e.ID == id)
 				.FirstOrDefault();
+		}
+
+		public override Task<Experience> FindAsync(int id)
+		{
+			return DbContext.Experience
+				.Include(e => e.Owner)
+				.Include(e => e.ExperienceType)
+				.Where(e => e.ID == id)
+				.FirstOrDefaultAsync();
 		}
 	}
 }
