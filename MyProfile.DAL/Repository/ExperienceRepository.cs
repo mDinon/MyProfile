@@ -16,7 +16,7 @@ namespace MyProfile.DAL.Repository
 		{
 			return DbContext.Experience
 				.Include(e => e.Owner)
-				.Include(e => e.ExperienceType)
+				//.Include(e => e.ExperienceType)
 				.Where(e => e.Owner_ID == ownerID && e.Active)
 				.OrderByDescending(e => e.ID)
 				.ToList();
@@ -26,7 +26,7 @@ namespace MyProfile.DAL.Repository
 		{
 			return DbContext.Experience
 				.Include(e => e.Owner)
-				.Include(e => e.ExperienceType)
+				//.Include(e => e.ExperienceType)
 				.Where(e => e.Owner_ID == ownerID && e.Active)
 				.OrderByDescending(e => e.ID)
 				.ToListAsync();
@@ -36,7 +36,7 @@ namespace MyProfile.DAL.Repository
 		{
 			return DbContext.Experience
 				.Include(e => e.Owner)
-				.Include(e => e.ExperienceType)
+				//.Include(e => e.ExperienceType)
 				.FirstOrDefault(e => e.ID == id && e.Active);
 		}
 
@@ -44,7 +44,7 @@ namespace MyProfile.DAL.Repository
 		{
 			return DbContext.Experience
 				.Include(e => e.Owner)
-				.Include(e => e.ExperienceType)
+				//.Include(e => e.ExperienceType)
 				.FirstOrDefaultAsync(e => e.ID == id && e.Active);
 		}
 	}

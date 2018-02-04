@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using MyProfile.Model.Entities;
 
 namespace MyProfile.Model.DTO
 {
@@ -12,7 +11,7 @@ namespace MyProfile.Model.DTO
 		[Required]
 		public DateTime? DateBegin { get; set; }
 		public DateTime? DateEnd { get; set; }
-		public OwnerDto Owner { get; set; }
-		public ExperienceTypeDto ContactType { get; set; }
+		[Required]
+		public int ExperienceType_ID { get; set; }
 	}
 }

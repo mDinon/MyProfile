@@ -16,7 +16,7 @@ namespace MyProfile.DAL.Repository
 		{
 			return DbContext.Contact
 				.Include(c => c.Owner)
-				.Include(c => c.ContactType)
+				//.Include(c => c.ContactType)
 				.Where(c => c.Owner_ID == ownerID && c.Active)
 				.OrderByDescending(c => c.ID)
 				.ToList();
@@ -26,7 +26,7 @@ namespace MyProfile.DAL.Repository
 		{
 			return DbContext.Contact
 				.Include(c => c.Owner)
-				.Include(c => c.ContactType)
+				//.Include(c => c.ContactType)
 				.Where(c => c.Owner_ID == ownerID && c.Active)
 				.OrderByDescending(c => c.ID)
 				.ToListAsync();
@@ -36,7 +36,7 @@ namespace MyProfile.DAL.Repository
 		{
 			return DbContext.Contact
 				.Include(c => c.Owner)
-				.Include(c => c.ContactType)
+				//.Include(c => c.ContactType)
 				.FirstOrDefault(c => c.ID == id && c.Active);
 		}
 
@@ -44,7 +44,7 @@ namespace MyProfile.DAL.Repository
 		{
 			return DbContext.Contact
 				.Include(c => c.Owner)
-				.Include(c => c.ContactType)
+				//.Include(c => c.ContactType)
 				.FirstOrDefaultAsync(c => c.ID == id && c.Active);
 		}
 	}
