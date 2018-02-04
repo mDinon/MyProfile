@@ -18,28 +18,24 @@ namespace MyProfile.DAL.Repository
 		public virtual TEntity Find(int id)
 		{
 			return DbContext.Set<TEntity>()
-				.Where(p => p.ID == id)
-				.FirstOrDefault();
+				.FirstOrDefault(x => x.ID == id && x.Active);
 		}
 
 		public virtual Task<TEntity> FindAsync(int id)
 		{
 			return DbContext.Set<TEntity>()
-				.Where(p => p.ID == id)
-				.FirstOrDefaultAsync();
+				.FirstOrDefaultAsync(x => x.ID == id && x.Active);
 		}
 
-		public bool Save()
+		public void Save()
 		{
 			try
 			{
 				DbContext.SaveChanges();
-				return true;
 			}
 			catch (Exception ex)
 			{
 				//TODO: handle and log exception
-				return false;
 			}
 		}
 

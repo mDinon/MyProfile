@@ -17,7 +17,7 @@ namespace MyProfile.DAL.Repository
 			return DbContext.Experience
 				.Include(e => e.Owner)
 				.Include(e => e.ExperienceType)
-				.Where(e => e.Owner_ID == ownerID)
+				.Where(e => e.Owner_ID == ownerID && e.Active)
 				.OrderByDescending(e => e.ID)
 				.ToList();
 		}
@@ -27,7 +27,7 @@ namespace MyProfile.DAL.Repository
 			return DbContext.Experience
 				.Include(e => e.Owner)
 				.Include(e => e.ExperienceType)
-				.Where(e => e.Owner_ID == ownerID)
+				.Where(e => e.Owner_ID == ownerID && e.Active)
 				.OrderByDescending(e => e.ID)
 				.ToListAsync();
 		}
@@ -37,8 +37,7 @@ namespace MyProfile.DAL.Repository
 			return DbContext.Experience
 				.Include(e => e.Owner)
 				.Include(e => e.ExperienceType)
-				.Where(e => e.ID == id)
-				.FirstOrDefault();
+				.FirstOrDefault(e => e.ID == id && e.Active);
 		}
 
 		public override Task<Experience> FindAsync(int id)
@@ -46,8 +45,7 @@ namespace MyProfile.DAL.Repository
 			return DbContext.Experience
 				.Include(e => e.Owner)
 				.Include(e => e.ExperienceType)
-				.Where(e => e.ID == id)
-				.FirstOrDefaultAsync();
+				.FirstOrDefaultAsync(e => e.ID == id && e.Active);
 		}
 	}
 }

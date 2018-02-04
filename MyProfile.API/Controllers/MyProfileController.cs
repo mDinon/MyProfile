@@ -45,15 +45,7 @@ namespace MyProfile.API.Controllers
 		{
 			List<Owner> owners = await _ownerRepository.GetListAsync();
 
-			owners.Add(new Owner()
-			{
-				LastName = "Prezime",
-				FirstName = "Ime",
-				DateBirth = DateTime.Now,
-				ID = 1
-			});
-
-			return new JsonResult(_mapper.Map<List<Owner>, List<OwnerDto>>(owners));
+			return Ok(_mapper.Map<List<Owner>, List<OwnerDto>>(owners));
 		}
 
 		[HttpGet("owner/{id}", Name = "GetOwner")]
@@ -64,7 +56,7 @@ namespace MyProfile.API.Controllers
 			if (owner == null)
 				return NotFound();
 
-			return new JsonResult(_mapper.Map<Owner, OwnerDto>(owner));
+			return Ok(_mapper.Map<Owner, OwnerDto>(owner));
 		}
 
 		#endregion
@@ -72,16 +64,14 @@ namespace MyProfile.API.Controllers
 		#region Post
 
 		[HttpPost("owner")]
-		public async Task<IActionResult> PostOwner([FromBody] OwnerDto ownerDto)
+		public IActionResult PostOwner([FromBody] OwnerDto ownerDto)
 		{
 			if (ownerDto == null)
 				return BadRequest();
 
 			Owner owner = _mapper.Map<OwnerDto, Owner>(ownerDto);
 
-			bool isOk = await TryUpdateModelAsync(owner);
-
-			if (!isOk || !ModelState.IsValid)
+			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
 			Owner result = _ownerRepository.Add(owner);
@@ -101,9 +91,7 @@ namespace MyProfile.API.Controllers
 
 			Owner updatedOwner = _mapper.Map<OwnerDto, Owner>(ownerDto);
 
-			bool isOk = await TryUpdateModelAsync(updatedOwner);
-
-			if (!isOk || !ModelState.IsValid)
+			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
 			Owner owner = await _ownerRepository.FindAsync(id);

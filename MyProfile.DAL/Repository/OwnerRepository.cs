@@ -15,6 +15,7 @@ namespace MyProfile.DAL.Repository
 		public List<Owner> GetList()
 		{
 			return DbContext.Owner
+				.Where(o => o.Active)
 				.OrderByDescending(o => o.ID)
 				.ToList();
 		}
@@ -22,6 +23,7 @@ namespace MyProfile.DAL.Repository
 		public Task<List<Owner>> GetListAsync()
 		{
 			return DbContext.Owner
+				.Where(o => o.Active)
 				.OrderByDescending(o => o.ID)
 				.ToListAsync();
 		}
@@ -29,8 +31,7 @@ namespace MyProfile.DAL.Repository
 		public override Owner Find(int id)
 		{
 			return DbContext.Owner
-				.Where(o => o.ID == id)
-				.FirstOrDefault();
+				.FirstOrDefault(o => o.ID == id && o.Active);
 		}
 	}
 }

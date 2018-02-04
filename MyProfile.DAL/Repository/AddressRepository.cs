@@ -16,7 +16,7 @@ namespace MyProfile.DAL.Repository
 		{
 			return this.DbContext.Address
 				.Include(a => a.Owner)
-				.Where(a => a.Owner_ID == ownerID)
+				.Where(a => a.Owner_ID == ownerID && a.Active)
 				.OrderByDescending(a => a.ID)
 				.ToList();
 		}
@@ -25,7 +25,7 @@ namespace MyProfile.DAL.Repository
 		{
 			return this.DbContext.Address
 				.Include(a => a.Owner)
-				.Where(a => a.Owner_ID == ownerID)
+				.Where(a => a.Owner_ID == ownerID && a.Active)
 				.OrderByDescending(a => a.ID)
 				.ToListAsync();
 		}
@@ -34,16 +34,15 @@ namespace MyProfile.DAL.Repository
 		{
 			return this.DbContext.Address
 				.Include(a => a.Owner)
-				.Where(a => a.ID == id)
-				.FirstOrDefault();
+				.FirstOrDefault(a => a.ID == id && a.Active);
 		}
 
 		public override Task<Address> FindAsync(int id)
 		{
 			return this.DbContext.Address
 				.Include(a => a.Owner)
-				.Where(a => a.ID == id)
-				.FirstOrDefaultAsync();
+				.FirstOrDefaultAsync(a => a.ID == id && a.Active);
 		}
+
 	}
 }
